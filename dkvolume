@@ -8,7 +8,7 @@ then
 	echo " - export NAME FILE"
 	echo " - import NAME FILE"
 	echo " - ls NAME"
-    echo " - size [NAME]"
+  echo " - size [NAME]"
 	exit 1
 fi
 
@@ -19,12 +19,12 @@ FILE=$3
 
 if [ $ARG = "clear" ]
 then
-	read -p "All data will be lost. Continue ? (Y/n)" answer
+	read -p "All data will be lost for '$VOLUME' (Y/n): " answer
 
-	if [ $answer -eq "Y" ]
+	if [ $answer == "Y" ]
 	then
 		docker volume rm $VOLUME
-		docker volume create $VOLUME
+		docker volume create --name $VOLUME
 	fi
 fi
 
@@ -46,7 +46,32 @@ then
   then
 	  echo "volume or file not specified"
   else
-    docker run --rm -it -v $VOLUME:/source -v $(pwd):/target busybox sh -cl "tar cvfz /target/$FILE /source/* "
+    docker run --rm -it -v $VOLUME:/source -v $(pwd):/target busybox sh -cl "cd /source && tar cvfz /target/$FILE * "
+  fi
+fi
+
+if [ $ARG = "import" ]
+then
+
+  if [ -z $VOLUME ] || [ -z $FILE ]
+  then
+	  echo "volume or file not specified"
+  else
+  
+    ./$0 clear $VOLUME
+
+    docker run --rm -it -v $VOLUME:/target -v $(pwd):/source busybox sh -cl "cd /target && tar xvfz /source/$FILE "
+  fi
+fi
+
+if [ $ARG = "ls" ]
+then
+
+  if [ -z $VOLUME ]
+  then
+	  echo "volume or file not specified"
+  else
+    docker run --rm -it -v $VOLUME:/source busybox sh -cl "ls /source"
   fi
 fi
 
