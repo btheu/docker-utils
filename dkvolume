@@ -1,0 +1,62 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+	echo "Usage: $0 CMD NAME [FILE]"
+	echo " - browse NAME"
+	echo " - clear NAME -f"
+	echo " - export NAME FILE"
+	echo " - import NAME FILE"
+	echo " - ls NAME"
+  echo " - size [NAME]"
+	exit 1
+fi
+
+ARG=$1
+VOLUME=$2
+FILE=$3
+
+
+if [ $ARG = "clear" ]
+then
+	read -p "All data will be lost. Continue ? (Y/n)" answer
+
+	if [ $answer -eq "Y" ]
+	then
+		docker volume rm $VOLUME
+		docker volume create $VOLUME
+	fi
+fi
+
+if [ $ARG = "browse" ]
+then
+
+  if [ -z $VOLUME ]
+  then
+    echo "volume not specified"
+  else
+	  docker run --rm -it -v $VOLUME:/source busybox sh
+  fi
+fi
+
+if [ $ARG = "export" ]
+then
+
+  if [ -z $VOLUME ] || [ -z $FILE ]
+  then
+	  echo "volume or file not specified"
+  else
+    docker run --rm -it -v $VOLUME:/source -v $(pwd):/target busybox sh -cl "tar cvfz /target/$FILE /source/* "
+  fi
+fi
+
+if [ $ARG = "size" ]
+then
+
+  if [ -z $VOLUME ]
+  then
+	  echo "volume not specified"
+  else
+    docker run --rm -it -v $VOLUME:/source busybox sh -cl "cd /source && du -sh "
+  fi
+fi
