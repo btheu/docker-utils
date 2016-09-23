@@ -1,0 +1,21 @@
+#!/bin/bash
+
+ID=$1
+
+if [ ! -z $(docker images -aq | grep $ID) ]
+then
+
+  echo "it's an image"
+  
+  docker run --rm -it $ID bash
+
+fi
+
+if [ ! -z $(docker ps -aq | grep $ID) ]
+then
+
+  echo "it's a container"
+
+  docker exec -it $ID bash
+
+fi

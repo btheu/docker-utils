@@ -1,0 +1,5 @@
+#!/bin/bash
+
+VOLUME=$1
+
+docker run --rm -it -v $VOLUME:/target busybox sh -cl "rm -rf /target/*"
