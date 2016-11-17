@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONTAINER="$1"
+USER="$2"
+FILE="$3"
+
+echo "$CONTAINER: $FILE: copie"
+docker cp $FILE $CONTAINER:/tmp/$(basename $FILE)
+
+echo "$CONTAINER: $FILE: restore"
+docker exec -it "$CONTAINER" bash -cl "psql \"dbname=$USER options=--search_path=cdm\" $USER -q -f /tmp/$(basename $FILE) "
+
+echo "$CONTAINER: $FILE: fini"

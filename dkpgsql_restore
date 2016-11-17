@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONTAINER="$1"
+USER="$2"
+FILE="$3"
+
+echo "$CONTAINER: $FILE: copie"
+docker cp $FILE $CONTAINER:/tmp/$FILE
+
+echo "$CONTAINER: $FILE: restore"
+docker exec -it "$CONTAINER" bash -cl "pg_restore --no-owner --username $USER --dbname $USER /tmp/$FILE "
+
+echo "$CONTAINER: $FILE: fini"
