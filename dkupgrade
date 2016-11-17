@@ -1,0 +1,5 @@
+#!/bin/bash
+
+HOME_DIR=$(dirname $0)
+
+echo $(cd $HOME_DIR && git pull)
