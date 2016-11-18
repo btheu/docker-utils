@@ -1,13 +1,11 @@
 #!/bin/bash
 
 CONTAINER="$1"
-USER="$2"
-FILE="$3"
+FILE="$2"
+#OPTIONS="$3"
 
-echo "$CONTAINER: $FILE: copie"
-docker cp $FILE $CONTAINER:/tmp/$(basename $FILE)
+OPTIONS=" -U postgres -d postgres " 
 
-echo "$CONTAINER: $FILE: restore"
-docker exec -it "$CONTAINER" bash -cl "psql \"dbname=$USER options=--search_path=cdm\" $USER -q -f /tmp/$(basename $FILE) "
+IMAGE=$(docker inspect --format='{{.Image}}' $CONTAINER)
 
-echo "$CONTAINER: $FILE: fini"
+docker run --rm -it -v $(pwd):/tmp/ --link $CONTAINER:CIBLE $IMAGE bash -cl "psql $OPTIONS -h CIBLE -p 5432 -q -f /tmp/$(basename $FILE) "

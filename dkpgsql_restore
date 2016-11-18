@@ -1,13 +1,11 @@
 #!/bin/bash
 
 CONTAINER="$1"
-USER="$2"
-FILE="$3"
+FILE="$2"
+#OPTIONS="$3"
 
-echo "$CONTAINER: $FILE: copie"
-docker cp $FILE $CONTAINER:/tmp/$FILE
+OPTIONS=" -U cdm -d cdm "
 
-echo "$CONTAINER: $FILE: restore"
-docker exec -it "$CONTAINER" bash -cl "pg_restore --no-owner --username $USER --dbname $USER /tmp/$FILE "
+IMAGE=$(docker inspect --format='{{.Image}}' $CONTAINER)
 
-echo "$CONTAINER: $FILE: fini"
+docker run --rm -it -v $(pwd):/tmp/ --link $CONTAINER:CIBLE $IMAGE bash -cl "pg_restore $OPTIONS -h CIBLE -p 5432 /tmp/$(basename $FILE) "

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+SERVICES="$1"
+
+if [ -z $SERVICES ]
+then
+  docker-compose down && docker-compose up -d
+else
+  docker-compose stop $SERVICES && docker-compose rm -f $SERVICES && docker-compose up -d $SERVICES
+fi
