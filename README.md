@@ -17,3 +17,20 @@ Update
 ```
 dkupgrade
 ```
+
+Examples
+-----------
+
+```
+dkpgsql_sql <CONTAINER> <sqlfile.sql>  " -U user -d <database> "
+```
+
+
+```
+dkpgsql_restore <CONTAINER> <dumpfile.backup>  " -U user -d <database> "
+```
+
+```
+dkpgsql_dump <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
+```
+
