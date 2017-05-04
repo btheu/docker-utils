@@ -34,6 +34,9 @@ dkpgsql_restore <CONTAINER> <dumpfile.backup>  " -U user -d <database> "
 ```
 
 ```
-dkpgsql_dump <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
+dkpgsql_dump <CONTAINER> <dumpfile.backup>  " -U user -d <database> -n <schema> --format=tar "
 ```
 
+```
+dkpgsql_dump_image <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
+```
