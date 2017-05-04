@@ -22,9 +22,12 @@ Examples
 -----------
 
 ```
-dkpgsql_sql <CONTAINER> <sqlfile.sql>  " -U user -d <database> "
+dkpgsql_sql <CONTAINER> "<sql query>"  " -U user -d <database> "
 ```
 
+```
+dkpgsql_sql_file <CONTAINER> <sqlfile.sql>  " -U user -d <database> "
+```
 
 ```
 dkpgsql_restore <CONTAINER> <dumpfile.backup>  " -U user -d <database> "

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+CONTAINER="$1"
+FILE="$2"
+OPTIONS="$3"
+
+#OPTIONS=" -U postgres -d postgres " 
+
+IMAGE=$(docker inspect --format='{{.Image}}' $CONTAINER)
+
+docker run --rm -it --network="container:$CONTAINER"  -v $(pwd):/tmp/ $IMAGE bash -cl "psql $OPTIONS -h $CONTAINER -p 5432 -q -f /tmp/$FILE "
