@@ -2,12 +2,19 @@
 
 ID=$1
 
+CMD=bash
+
+if [ ! -z $2 ]
+then
+  CMD=$2
+fi
+
 if [ ! -z $(docker images -aq | grep $ID) ]
 then
 
   echo "it's an image"
   
-  docker run --rm -it $ID bash
+  docker run --rm -it $ID $CMD
 
 fi
 
@@ -16,6 +23,6 @@ then
 
   echo "it's a container"
 
-  docker exec -it $ID bash
+  docker exec -it $ID $CMD
 
 fi

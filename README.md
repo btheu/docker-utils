@@ -1,7 +1,7 @@
 # docker-utils
 
 
-Installation
+Install
 -----------
 
 ```
@@ -18,7 +18,7 @@ Update
 dkupgrade
 ```
 
-Examples
+Samples
 -----------
 
 ```
