@@ -9,7 +9,7 @@ then
   CMD=$2
 fi
 
-if [ ! -z $(docker images -aq | grep $ID) ]
+if [ ! -z "$(docker images -aq | grep $ID)" ]
 then
 
   echo "it's an image"
@@ -18,7 +18,7 @@ then
 
 fi
 
-if [ ! -z $(docker ps -aq | grep $ID) ]
+if [ ! -z "$(docker ps -aq | grep $ID)" ]
 then
 
   echo "it's a container"
