@@ -1,0 +1,32 @@
+#!/bin/bash
+
+BUILDER_PLUGINS_DIR=$(dirname $0)/plugins
+
+BUILDER_WORKSPACE=$(pwd)
+
+BUILDER_FILE="$BUILDER_WORKSPACE/Builderfile"
+
+BUILDER_TARGET="$BUILDER_WORKSPACE/target"
+
+echo "BUILDER_PLUGINS_DIR $BUILDER_PLUGINS_DIR"
+echo "BUILDER_WORKSPACE   $BUILDER_WORKSPACE"
+echo "BUILDER_TARGET      $BUILDER_TARGET"
+echo "BUILDER_FILE        $BUILDER_FILE"
+
+if [ ! -e $BUILDER_FILE ]
+then
+
+  echo "$BUILDER_FILE not found"
+  exit 1
+
+fi
+
+## Plugins loading
+
+for plugin in $BUILDER_PLUGINS_DIR/*.sh
+do
+  source $plugin
+done
+
+source $BUILDER_FILE
+
