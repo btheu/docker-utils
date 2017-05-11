@@ -18,7 +18,7 @@ Update
 dkupgrade
 ```
 
-Samples
+PostgreSQL tools
 -----------
 
 ```
@@ -39,4 +39,28 @@ dkpgsql_dump <CONTAINER> <dumpfile.backup>  " -U user -d <database> -n <schema> 
 
 ```
 dkpgsql_dump_image <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
+```
+
+
+Pipeline build
+-----------
+
+Builderfile
+```
+#!/bin/bash
+BUILDER_GIT_URL=https://github.com/user/reponame
+BUILDER_GIT_BRANCH=develop
+d_git
+
+d_maven clean install -Dmaven.test.skip=true
+
+DOCKER_TAGS="1.0 1.1 latest"
+d_docker
+
+d_compose
+```
+
+Start the pipeline build
+```
+dkbuilder
 ```
