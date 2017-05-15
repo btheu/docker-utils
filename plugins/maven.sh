@@ -10,12 +10,15 @@ MAVEN_SETTINGS_FILE="$BUILDER_WORKSPACE/settings.xml"
 MAVEN_RELEASE_USERNAME=
 MAVEN_RELEASE_PASSWORD=
 
+MAVEN_SSH_KEY="$(dirname ~/.ssh/id_rsa.pub)"
+
 d_maven(){
   echo "MAVEN CMD           $@"
   echo "MAVEN_DIR           $MAVEN_DIR"
   echo "MAVEN_VERSION       $MAVEN_VERSION"
   echo "MAVEN_SETTINGS_FILE $MAVEN_SETTINGS_FILE"
-  docker run -it --rm -v $MAVEN_DIR:/source  -v $MAVEN_SETTINGS_FILE:/conf/settings.xml  -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s /conf/settings.xml --batch-mode $@
+  echo "MAVEN_SSH_KEY       $MAVEN_SSH_KEY"
+  docker run -it --rm -v $MAVEN_DIR:/source -v $MAVEN_SSH_KEY:/root/.ssh/ -v $MAVEN_SETTINGS_FILE:/conf/settings.xml  -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s /conf/settings.xml --batch-mode $@
 }
 
 d_maven_version(){
@@ -33,11 +36,20 @@ d_maven_version(){
 
 d_maven_release(){
 
-  ## TODO BTHEU propagate git ssh key for jgitflow
+  local args="-DenableSshAgent=true -DnoDeploy=true"
 
-  local auth="-Dusername=$MAVEN_RELEASE_USERNAME -Dpassword=$MAVEN_RELEASE_PASSWORD"
+  local plugin="external.atlassian.jgitflow:jgitflow-maven-plugin:1.0-m5.1"
 
-  d_maven com.atlassian.maven.plugins:maven-jgitflow-plugin:release-start  $auth $@
+  d_maven $plugin:release-start  $args $@
 
-  d_maven com.atlassian.maven.plugins:maven-jgitflow-plugin:release-finish $auth $@
+  local RC=$?
+  if [ $RC -ne 0 ]
+  then
+    echo "Release start failed"
+    exit $RC
+  fi
+
+  d_maven $plugin:release-finish $args $@
+
 }
+

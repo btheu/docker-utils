@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $(dirname $0)/commons.sh
+
 BUILDER_PLUGINS_DIR=$(dirname $0)/plugins
 
 BUILDER_WORKSPACE=$(pwd)
@@ -25,7 +27,7 @@ fi
 
 for plugin in $BUILDER_PLUGINS_DIR/*.sh
 do
-  source $plugin
+  RUN source $plugin
 done
 
 source $BUILDER_FILE
