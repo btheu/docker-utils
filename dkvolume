@@ -35,7 +35,7 @@ then
   then
     echo "volume not specified"
   else
-	  docker run --rm -it -v $VOLUME:/source busybox sh
+	  docker run --rm -it -v $VOLUME:/volume -w /volume busybox sh
   fi
 fi
 
