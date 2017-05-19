@@ -2,6 +2,8 @@
 
 source $(dirname $0)/commons.sh
 
+BUILDER_APPLI_NAME=""
+
 BUILDER_PLUGINS_DIR=$(dirname $0)/plugins
 
 BUILDER_WORKSPACE=$(pwd)
@@ -30,5 +32,24 @@ do
   RUN source $plugin
 done
 
+## Builderfile loading
+
 source $BUILDER_FILE
 
+BUILDER_VOLUME="Build_"${BUILDER_APPLI_NAME,,} # lowercase
+BUILDER_VOLUME=${BUILDER_VOLUME/ /_}
+
+echo "BUILDER_VOLUME      $BUILDER_VOLUME"
+
+## Create docker volume for building
+
+docker volume create $BUILDER_VOLUME
+
+
+
+
+
+
+## run build method from Builderfile
+
+build
