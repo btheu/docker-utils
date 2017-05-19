@@ -1,11 +1,10 @@
 #!/bin/bash
 
 ## MAVEN
-MAVEN_DIR=$BUILDER_TARGET
 
 MAVEN_VERSION=maven:3.3.9-jdk-8
 
-MAVEN_SETTINGS_FILE="$BUILDER_WORKSPACE/settings.xml"
+MAVEN_SETTINGS_FILE="settings.xml"
 
 MAVEN_RELEASE_USERNAME=
 MAVEN_RELEASE_PASSWORD=
@@ -14,11 +13,12 @@ MAVEN_SSH_KEY="$(dirname ~/.ssh/id_rsa.pub)"
 
 d_maven(){
   echo "MAVEN CMD           $@"
-  echo "MAVEN_DIR           $MAVEN_DIR"
   echo "MAVEN_VERSION       $MAVEN_VERSION"
   echo "MAVEN_SETTINGS_FILE $MAVEN_SETTINGS_FILE"
   echo "MAVEN_SSH_KEY       $MAVEN_SSH_KEY"
-  docker run -it --rm -v $MAVEN_DIR:/source -v $MAVEN_SSH_KEY:/root/.ssh/ -v $MAVEN_SETTINGS_FILE:/conf/settings.xml  -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s /conf/settings.xml --batch-mode $@
+  echo "BUILDER_WORKSPACE   $BUILDER_WORKSPACE"
+  echo "BUILDER_VOLUME      $BUILDER_VOLUME"
+  docker run -it --rm -v $BUILDER_WORKSPACE:/workspace -v $BUILDER_VOLUME:/source -v $MAVEN_SSH_KEY:/root/.ssh/ -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s "/workspace/$MAVEN_SETTINGS_FILE" --batch-mode $@
 }
 
 d_maven_version(){
@@ -31,7 +31,7 @@ d_maven_version(){
 
   d_maven org.apache.maven.plugins:maven-help-plugin:evaluate -Dexpression=project.version | tee "$TMP"
 
-  echo $(cat "$TMP" | grep -v "^[\[|M]")
+  echo $(cat "$TMP" | grep -v "^[\[|M]" | tail -n 1)
 }
 
 d_maven_release(){

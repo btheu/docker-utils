@@ -6,6 +6,7 @@ COMPOSE_FILE="$BUILDER_WORKSPACE/docker-compose.yml"
 
 d_compose(){
 
+  echo "COMPOSE"
   echo "COMPOSE_FILE $COMPOSE_FILE"
   cd $(dirname $COMPOSE_FILE)
 

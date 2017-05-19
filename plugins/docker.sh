@@ -2,9 +2,7 @@
 
 ## BUILD IMAGE
 
-DOCKER_CONTEXT=$BUILDER_TARGET
-
-DOCKER_DOCKERFILE="$BUILDER_WORKSPACE/Dockerfile"
+DOCKER_DOCKERFILE="Dockerfile"
 
 DOCKER_VERSION=docker:17
 
@@ -24,12 +22,11 @@ d_docker(){
     TAGS="$TAGS -t $DOCKER_IMAGE:$tag"
   done
 
-  echo "DOCKER         $TAGS"
-  echo "DOCKER_CONTEXT $DOCKER_CONTEXT"
-  echo "DOCKER_VERSION $DOCKER_VERSION"
-  echo "DOCKER_IMAGE   $DOCKER_IMAGE"
+  echo "DOCKER             $TAGS"
+  echo "DOCKER_VERSION     $DOCKER_VERSION"
+  echo "DOCKER_IMAGE       $DOCKER_IMAGE"
+  echo "BUILDER_VOLUME     $BUILDER_VOLUME"
+  echo "BUILDER_WORKSPACE  $BUILDER_WORKSPACE"
 
-  cp -vf $DOCKER_DOCKERFILE $DOCKER_CONTEXT
-
-  docker run -it --rm -v $DOCKER_CONTEXT:/context -v /var/run/docker.sock:/var/run/docker.sock -w /context $DOCKER_VERSION docker build /context $TAGS
+  docker run -it --rm -v $BUILDER_WORKSPACE:/context/workspace  -v $BUILDER_VOLUME:/context/volume -v /var/run/docker.sock:/var/run/docker.sock -w /context $DOCKER_VERSION docker build . -f /context/workspace/$DOCKER_DOCKERFILE $TAGS
 }
