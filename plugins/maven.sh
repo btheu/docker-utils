@@ -9,16 +9,22 @@ MAVEN_SETTINGS_FILE="settings.xml"
 MAVEN_RELEASE_USERNAME=
 MAVEN_RELEASE_PASSWORD=
 
+MAVEN_RELEASE_SSH=true
+MAVEN_RELEASE_NO_DEPLOY=true
+
 MAVEN_SSH_KEY="$(dirname ~/.ssh/id_rsa.pub)"
 
 d_maven(){
-  echo "MAVEN CMD           $@"
+
+  local MAVEN_CMD=$@
+
+  echo "MAVEN_CMD           $MAVEN_CMD"
   echo "MAVEN_VERSION       $MAVEN_VERSION"
   echo "MAVEN_SETTINGS_FILE $MAVEN_SETTINGS_FILE"
   echo "MAVEN_SSH_KEY       $MAVEN_SSH_KEY"
   echo "BUILDER_WORKSPACE   $BUILDER_WORKSPACE"
   echo "BUILDER_VOLUME      $BUILDER_VOLUME"
-  docker run -it --rm -v $BUILDER_WORKSPACE:/workspace -v $BUILDER_VOLUME:/source -v $MAVEN_SSH_KEY:/root/.ssh/ -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s "/workspace/$MAVEN_SETTINGS_FILE" --batch-mode $@
+  docker run -it --rm -v $BUILDER_WORKSPACE:/workspace -v $BUILDER_VOLUME:/source -v $MAVEN_SSH_KEY:/root/.ssh/ -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s "/workspace/$MAVEN_SETTINGS_FILE" --batch-mode $MAVEN_CMD
 }
 
 d_maven_version(){
@@ -36,9 +42,12 @@ d_maven_version(){
 
 d_maven_release(){
 
-  local args="-DenableSshAgent=true -DnoDeploy=true"
+  local args="-DenableSshAgent=$MAVEN_RELEASE_SSH -DnoDeploy=$MAVEN_RELEASE_NO_DEPLOY -Dusername=$MAVEN_RELEASE_USERNAME -Dpassword=$MAVEN_RELEASE_PASSWORD "
 
   local plugin="external.atlassian.jgitflow:jgitflow-maven-plugin:1.0-m5.1"
+
+  echo "MAVEN_RELEASE_SSH         $MAVEN_RELEASE_SSH"
+  echo "MAVEN_RELEASE_NO_DEPLOY   $MAVEN_RELEASE_NO_DEPLOY"
 
   d_maven $plugin:release-start  $args $@
 
