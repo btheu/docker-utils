@@ -9,6 +9,7 @@ MAVEN_SETTINGS_FILE="settings.xml"
 MAVEN_RELEASE_USERNAME=
 MAVEN_RELEASE_PASSWORD=
 
+MAVEN_RELEASE_PUSH=false
 MAVEN_RELEASE_SSH=true
 MAVEN_RELEASE_NO_DEPLOY=true
 
@@ -42,7 +43,7 @@ d_maven_version(){
 
 d_maven_release(){
 
-  local args="-DenableSshAgent=$MAVEN_RELEASE_SSH -DnoDeploy=$MAVEN_RELEASE_NO_DEPLOY -Dusername=$MAVEN_RELEASE_USERNAME -Dpassword=$MAVEN_RELEASE_PASSWORD "
+  local args="-DautoVersionSubmodules=true -DenableSshAgent=$MAVEN_RELEASE_SSH -DnoDeploy=$MAVEN_RELEASE_NO_DEPLOY -Dusername=$MAVEN_RELEASE_USERNAME -Dpassword=$MAVEN_RELEASE_PASSWORD "
 
   local plugin="external.atlassian.jgitflow:jgitflow-maven-plugin:1.0-m5.1"
 
@@ -58,7 +59,17 @@ d_maven_release(){
     exit $RC
   fi
 
-  d_maven $plugin:release-finish $args $@
+  RUN d_maven $plugin:release-finish $args $@
+
+  if [ $MAVEN_RELEASE_PUSH == 'true' ]
+  then
+    echo "Pushing new git status"
+
+    RUN l_git push --all
+    RUN l_git push --tags
+  fi
 
 }
+
+
 

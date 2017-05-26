@@ -7,7 +7,7 @@ BUILDER_APPLI_NAME=""
 BUILDER_PLUGINS_DIR=$(dirname $0)/plugins
 
 BUILDER_WORKSPACE=$(pwd)
-BUILDER_DELETE_VOLUME=yes
+BUILDER_DELETE_VOLUME="true"
 BUILDER_FILE="$BUILDER_WORKSPACE/Builderfile"
 
 BUILDER_TARGET="$BUILDER_WORKSPACE/target"
@@ -51,7 +51,7 @@ docker volume create $BUILDER_VOLUME
 
 build
 
-if [ "$BUILDER_DELETE_VOLUME" == "yes" ]
+if [ "$BUILDER_DELETE_VOLUME" == "true" ]
 then
   echo "Delete build volume $BUILDER_VOLUME"
   docker volume rm  $BUILDER_VOLUME
