@@ -31,7 +31,7 @@ d_maven_version(){
 
   d_maven org.apache.maven.plugins:maven-help-plugin:evaluate -Dexpression=project.version | tee "$TMP"
 
-  echo $(cat "$TMP" | grep -v "^[\[|M]" | tail -n 1)
+  export MAVEN_POM_VERSION=$(cat "$TMP" | grep -v "^[\[|M]" | tail -n 1 | tr -d '\r' )
 }
 
 d_maven_release(){

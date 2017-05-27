@@ -16,6 +16,7 @@ then
   
   docker run --rm -it $ID $CMD
 
+  exit $?
 fi
 
 if [ ! -z "$(docker ps -aq | grep $ID)" ]
@@ -25,4 +26,10 @@ then
 
   docker exec -it $ID $CMD
 
+  exit $?
+
+else
+
+  docker run --rm -it $ID $CMD
+  
 fi
