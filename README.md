@@ -50,14 +50,17 @@ Builderfile
 #!/bin/bash
 BUILDER_GIT_URL=https://github.com/user/reponame
 BUILDER_GIT_BRANCH=develop
-d_git
 
-d_maven clean install -Dmaven.test.skip=true
+build(){
+  RUN d_git_clone
 
-DOCKER_TAGS="1.0 1.1 latest"
-d_docker
+  RUN d_maven clean install -Dmaven.test.skip=true
 
-d_compose
+  DOCKER_TAGS="1.0 1.1 latest"
+  RUN d_docker
+
+  RUN d_compose
+}
 ```
 
 Start the pipeline build
