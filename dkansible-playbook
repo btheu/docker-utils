@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -z $ANSIBLE_IMAGE ];then
+  ANSIBLE_IMAGE=generik/ansible:v2.0.1.0-1
+fi
+
+# -v ansible:/root/.ssh/
+
+docker run --tty --rm -it -v $(pwd):/ansible -w /ansible $ANSIBLE_IMAGE ansible-playbook $@
