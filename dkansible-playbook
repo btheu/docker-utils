@@ -1,9 +1,13 @@
 #!/bin/bash
 
 if [ -z $ANSIBLE_IMAGE ];then
-  ANSIBLE_IMAGE=generik/ansible:v2.0.1.0-1
+  ANSIBLE_IMAGE=williamyeh/ansible:centos7
+fi
+
+if [ -z $ANSIBLE_DOCKER_OPTS ];then
+  ANSIBLE_DOCKER_OPTS="  "
 fi
 
 # -v ansible:/root/.ssh/
 
-docker run --tty --rm -it -v $(pwd):/ansible -w /ansible $ANSIBLE_IMAGE ansible-playbook $@
+docker run --tty --rm -it -v $PWD:/ansible -w /ansible $ANSIBLE_DOCKER_OPTS $ANSIBLE_IMAGE ansible-playbook $@
