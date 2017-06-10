@@ -42,20 +42,22 @@ BUILDER_VOLUME=${BUILDER_VOLUME// /_}
 echo "BUILDER_VOLUME        $BUILDER_VOLUME"
 echo "BUILDER_DELETE_VOLUME $BUILDER_DELETE_VOLUME"
 
-## Create docker volume for building
-
-docker volume create $BUILDER_VOLUME
-
-
-## run build method from Builderfile
-
-build
+## Clean volume before building
 
 if [ "$BUILDER_DELETE_VOLUME" == "true" ]
 then
   echo "Delete build volume $BUILDER_VOLUME"
   docker volume rm  $BUILDER_VOLUME
 fi
+
+## Create docker volume for building
+
+docker volume create $BUILDER_VOLUME
+
+## run build method from Builderfile
+
+build
+
 
 
 

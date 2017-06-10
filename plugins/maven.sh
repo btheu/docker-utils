@@ -48,6 +48,7 @@ d_maven_release(){
   local plugin="external.atlassian.jgitflow:jgitflow-maven-plugin:1.0-m5.1"
 
   echo "MAVEN_RELEASE_SSH         $MAVEN_RELEASE_SSH"
+  echo "MAVEN_RELEASE_PUSH        $MAVEN_RELEASE_PUSH"
   echo "MAVEN_RELEASE_NO_DEPLOY   $MAVEN_RELEASE_NO_DEPLOY"
 
   d_maven $plugin:release-start  $args $@
