@@ -4,11 +4,11 @@ source $(dirname $0)/commons.sh
 
 HERE=$(dirname $0)
 
+DOCKER_IMAGE="test/docker-go-alpine"
+
 go(){
-   local CMD="docker run --rm -it -v $HERE/pipe:/pipe -v $PWD/Pipefile:/pipe/Pipefile.go -v /var/run/docker.sock:/var/run/docker.sock -w /pipe golang go run Pipefile.go hello.go"
-   
+   local CMD="docker run --rm -it -v $HERE/pipe:/pipe -v $PWD/Pipefile:/pipe/Pipefile.go -v /var/run/docker.sock:/var/run/docker.sock -w /pipe $DOCKER_IMAGE go run Pipefile.go hello.go"
    echo $CMD
-   
    $CMD
 }
 

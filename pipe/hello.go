@@ -1,17 +1,25 @@
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "os"
+    "os/exec"
+//    "sync"
+)
 
-func stage1() {
 
-  fmt.Println("hello from upside ")
-    
+func Command(cmd string, args... string) {
+  output, err := exec.Command(cmd, args...).CombinedOutput()
+  if err != nil {
+    os.Stderr.WriteString(err.Error())
+  }
+  fmt.Println(string(output))
 }
 
 func main() {
   fmt.Println("hello world")
 
-  stage1()
+  //Command("docker", "run", "--rm", "-i", "hello-world")
 
   stage()
 
