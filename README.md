@@ -38,6 +38,10 @@ dkpgsql_dump <CONTAINER> <dumpfile.backup>  " -U user -d <database> -n <schema> 
 ```
 
 ```
+dkpgsql_sql_image <image> "<sql query>"  " -U user -d <database> -n <schema> -h <host> -p <port> "
+```
+
+```
 dkpgsql_dump_image <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
 ```
 
