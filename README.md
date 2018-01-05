@@ -38,7 +38,7 @@ dkpgsql_dump <CONTAINER> <dumpfile.backup>  " -U user -d <database> -n <schema> 
 ```
 
 ```
-dkpgsql_sql_image <image> "<sql query>"  " -U user -d <database> -n <schema> -h <host> -p <port> "
+dkpgsql_sql_image <IMAGE> "<sql query>"  " -U user -d <database> -n <schema> -h <host> -p <port> "
 ```
 
 ```
