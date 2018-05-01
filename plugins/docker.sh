@@ -30,5 +30,5 @@ d_docker(){
   echo "BUILDER_VOLUME     $BUILDER_VOLUME"
   echo "BUILDER_WORKSPACE  $BUILDER_WORKSPACE"
 
-  docker run -it --rm -v $BUILDER_WORKSPACE:/context/workspace  -v $BUILDER_VOLUME:/context/volume -v /var/run/docker.sock:/var/run/docker.sock -w /context $DOCKER_VERSION docker build $DOCKER_CONTEXT -f /context/workspace/$DOCKER_DOCKERFILE $TAGS
+  docker run --rm -v $BUILDER_WORKSPACE:/context/workspace  -v $BUILDER_VOLUME:/context/volume -v /var/run/docker.sock:/var/run/docker.sock -w /context $DOCKER_VERSION docker build $DOCKER_CONTEXT -f /context/workspace/$DOCKER_DOCKERFILE $TAGS
 }

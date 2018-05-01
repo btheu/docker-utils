@@ -25,7 +25,7 @@ d_maven(){
   echo "MAVEN_SSH_KEY       $MAVEN_SSH_KEY"
   echo "BUILDER_WORKSPACE   $BUILDER_WORKSPACE"
   echo "BUILDER_VOLUME      $BUILDER_VOLUME"
-  docker run -it --rm -v $BUILDER_WORKSPACE:/workspace -v $BUILDER_VOLUME:/source -v $MAVEN_SSH_KEY:/root/.ssh/ -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s "/workspace/$MAVEN_SETTINGS_FILE" --batch-mode $MAVEN_CMD
+  docker run --rm -v $BUILDER_WORKSPACE:/workspace -v $BUILDER_VOLUME:/source -v $MAVEN_SSH_KEY:/root/.ssh/ -v /tmp/repository:/repository -w /source $MAVEN_VERSION mvn -s "/workspace/$MAVEN_SETTINGS_FILE" --batch-mode $MAVEN_CMD
 }
 
 d_maven_version(){

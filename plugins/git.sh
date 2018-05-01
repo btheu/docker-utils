@@ -16,7 +16,7 @@ l_git(){
   echo "BUILDER_GIT_SSH_KEY   $BUILDER_GIT_SSH_KEY"
   echo "BUILDER_VOLUME        $BUILDER_VOLUME"
 
-  docker run -it --rm -v $BUILDER_VOLUME:/source -w /source -v $BUILDER_GIT_SSH_KEY:/root/.ssh/ indiehosters/git git $@
+  docker run --rm -v $BUILDER_VOLUME:/source -w /source -v $BUILDER_GIT_SSH_KEY:/root/.ssh/ indiehosters/git git $@
 
 }
 
