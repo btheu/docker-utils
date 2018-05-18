@@ -42,11 +42,11 @@ dkpgsql_sql_image <IMAGE> "<sql query>"  " -U user -d <database> -n <schema> -h 
 ```
 
 ```
-dkpgsql_dump_image <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
+dkpgsql_restore_image <IMAGE> <dumpfile.backup>  " -U user -d <database> "
 ```
 
 ```
-dkpgsql_restore <IMAGE> <dumpfile.backup>  " -U user -d <database> "
+dkpgsql_dump_image <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
 ```
 
 Pipeline build
