@@ -8,5 +8,5 @@ OPTIONS="$3"
 
 #IMAGE=$(docker inspect --format='{{.Image}}' $CONTAINER)
 
-docker run --rm -it  -v $(pwd):/tmp/  $IMAGE bash -cl "pg_restore $OPTIONS  -p 5432 /tmp/$FILE "
+docker run --rm -it  -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "pg_restore $OPTIONS  -p 5432 /work/$FILE "
 
