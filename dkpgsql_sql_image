@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+IMAGE="$1"
+QUERY="$2"
+OPTIONS="$3"
+
+#OPTIONS=" -U postgres -d postgres "
+
+
+
+docker run --rm -it -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "echo $QUERY | psql $OPTIONS -q "
