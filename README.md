@@ -22,31 +22,31 @@ PostgreSQL tools
 -----------
 
 ```
-dkpgsql_sql <CONTAINER> "<sql query>"  " -U user -d <database> "
+dkpgsql_sql <CONTAINER> "<sql query>"  " -U <user> -d <database> "
 ```
 
 ```
-dkpgsql_sql_file <CONTAINER> <sqlfile.sql>  " -U user -d <database> "
+dkpgsql_sql_file <CONTAINER> <sqlfile.sql>  " -U <user> -d <database> "
 ```
 
 ```
-dkpgsql_restore <CONTAINER> <dumpfile.backup>  " -U user -d <database> "
+dkpgsql_restore <CONTAINER> <dumpfile.backup>  " -U <user> -d <database> "
 ```
 
 ```
-dkpgsql_dump <CONTAINER> <dumpfile.backup>  " -U user -d <database> -n <schema> --format=tar "
+dkpgsql_dump <CONTAINER> <dumpfile.backup>  " -U <user> -d <database> -n <schema> --format=tar "
 ```
 
 ```
-dkpgsql_sql_image <IMAGE> "<sql query>"  " -U user -d <database> -n <schema> -h <host> -p <port> "
+dkpgsql_sql_image <IMAGE> "<sql query>"  " -U <user> -d <database> -n <schema> -h <host> -p <port> "
 ```
 
 ```
-dkpgsql_restore_image <IMAGE> <dumpfile.backup>  " -U user -d <database> "
+dkpgsql_restore_image <IMAGE> <dumpfile.backup>  " -U <user> -d <database> -h <host> -p <port> "
 ```
 
 ```
-dkpgsql_dump_image <IMAGE> <dumpfile.backup>  " -U user -d <database> -n <schema> -h <host> -p <port> --format=tar "
+dkpgsql_dump_image <IMAGE> <dumpfile.backup>  " -U <user> -d <database> -n <schema> -h <host> -p <port> --format=tar "
 ```
 
 Pipeline build
