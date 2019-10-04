@@ -1,9 +1,10 @@
 #!/bin/bash
+set -e
 
 IMAGE="$1"
 FILE="$2"
 OPTIONS="$3"
 
-#OPTIONS=" -U postgres -d cdm -n cdm -h 10.85.209.174 -p 15432 --format=tar "
+#OPTIONS=" -U postgres -d <dbname> -n <schema> -h <host> -p 5432 --format=tar "
 
 docker run --rm -it -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "pg_dump $OPTIONS > /work/$(basename $FILE) "
