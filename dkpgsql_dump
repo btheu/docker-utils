@@ -7,4 +7,4 @@ OPTIONS="$3"
 
 IMAGE=$(docker inspect --format='{{.Image}}' $CONTAINER)
 
-docker run --rm -it --link="$CONTAINER" -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "pg_dump $OPTIONS -h $CONTAINER -p 5432 > /work/$(basename $FILE) "
+docker run --rm -it --network "container:$CONTAINER" -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "pg_dump $OPTIONS -h $CONTAINER -p 5432 > /work/$(basename $FILE) "
