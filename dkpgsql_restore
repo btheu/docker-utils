@@ -5,9 +5,9 @@ CONTAINER="$1"
 FILE="$2"
 OPTIONS="$3"
 
-IMAGE=$(docker inspect --format='{{.Image}}' $CONTAINER)
-NETWORK=$(docker inspect postgres_test | jq -r '.[] | .NetworkSettings.Networks | keys[0]')
-HOSTNAME=$(docker inspect postgres_test | jq -r '.[] | .HostnamePath' | xargs cat)
+IMAGE=$(docker inspect --format='{{.Image}}' "$CONTAINER")
+NETWORK=$( docker inspect "$CONTAINER" | jq -r '.[] | .NetworkSettings.Networks | keys[0]')
+HOSTNAME=$(docker inspect "$CONTAINER" | jq -r ".[] | .Config.Hostname")
 
 docker run --rm -it --network="$NETWORK" -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "pg_restore $OPTIONS -h $HOSTNAME -p 5432 /work/$FILE "
 
