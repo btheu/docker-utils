@@ -9,4 +9,4 @@ OPTIONS="$3"
 
 
 
-docker run --rm -it -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "echo $QUERY | psql $OPTIONS -q "
+docker run --rm -it -v $(pwd):/work/ -e PGPASSWORD=$PGPASSWORD $IMAGE bash -cl "echo '$QUERY' | psql $OPTIONS -q "
