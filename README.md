@@ -42,6 +42,10 @@ dkpgsql_sql_image <IMAGE> "<sql query>"  " -U <user> -d <database> -n <schema> -
 ```
 
 ```
+dkpgsql_sql_file_image <IMAGE> "<sqlfile.sql>"  " -U <user> -d <database> -n <schema> -h <host> -p <port> "
+```
+
+```
 dkpgsql_restore_image <IMAGE> <dumpfile.backup>  " -U <user> -d <database> -h <host> -p <port> "
 ```
 
